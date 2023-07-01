@@ -62,7 +62,13 @@ function handleResetClick() {
   const para = document.getElementById('para');
   para.innerHTML = '';
 }
-
+function () {
+  cy.visit(baseUrl + "/main.html");
+  cy.get('[data-ns-test="img1"]').eq(0).click();
+  cy.get('[data-ns-test="img2"]').eq(0).click();
+  cy.get('#btn').click();
+  cy.get('p').should("contain", "We can't verify you as a human. You selected the non-identical tiles.");
+}
 // Function to handle verify button click event
 function handleVerifyClick() {
   verifyButtonClicked = true;
