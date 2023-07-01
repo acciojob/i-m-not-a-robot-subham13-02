@@ -1,4 +1,3 @@
-//your JS code here. If required.
 // Get the image elements
 const images = document.querySelectorAll('img');
 
@@ -12,8 +11,9 @@ const randomIndices = Array.from({ length: 6 }, (_, i) => i)
 
 // Assign the image sources and class names based on the random indices
 images.forEach((image, index) => {
-  image.src = `image_${randomIndices[index]}.jpg`;
+  image.src = `image_url_${randomIndices[index]}.jpg`;
   image.classList.add(`img${randomIndices[index]}`);
+  image.addEventListener('click', handleImageClick);
 });
 
 // Variables to keep track of the selected images
@@ -70,5 +70,24 @@ function handleVerifyClick() {
   const para = document.getElementById('para');
   para.innerHTML = '';
 
-  if (
-    selectedImages.length === 
+  if (selectedImages.length === 2) {
+    const class1 = selectedImages[0].classList[0];
+    const class2 = selectedImages[1].classList[0];
+
+    if (class1 === class2) {
+      para.innerHTML = "You are a human. Congratulations!";
+    } else {
+      para.innerHTML = "We can't verify you as a human. You selected the non-identical tiles.";
+    }
+  }
+
+  const verifyButton = document.getElementById('verify');
+  verifyButton.style.display = 'none';
+}
+
+// Add event listeners to the reset and verify buttons
+const resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', handleResetClick);
+
+const verifyButton = document.getElementById('verify');
+verifyButton.addEventListener('click', handleVerifyClick);
