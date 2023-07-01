@@ -1,3 +1,4 @@
+/*  your css code here. If applicable */
 #image-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -9,9 +10,10 @@ img {
   height: 200px;
   object-fit: cover;
   cursor: pointer;
-  border: 2px solid grey;
+  border: 5px solid grey;
 }
 
-.img3-4 {
-  border-color: blue;
+.selected {
+  border: 5px solid blue;
 }
+
