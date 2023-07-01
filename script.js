@@ -11,8 +11,12 @@ const randomIndices = Array.from({ length: 6 }, (_, i) => i)
 
 // Assign the image sources and class names based on the random indices
 images.forEach((image, index) => {
-  image.src = `image_url_${randomIndices[index]}.jpg`;
-  image.classList.add(`img${randomIndices[index]}`);
+  const imgIndex = randomIndices[index];
+  image.src = `image_url_${imgIndex}.jpg`;
+  image.classList.add(`img${imgIndex}`);
+  if (index === 2 || index === 3) {
+    image.classList.add('img3-4');
+  }
   image.addEventListener('click', handleImageClick);
 });
 
@@ -45,55 +49,3 @@ function handleImageClick(event) {
   verifyButton.style.display = selectedImages.length === 2 ? 'block' : 'none';
 }
 
-// Function to handle reset button click event
-function handleResetClick() {
-  images.forEach(image => {
-    image.classList.remove('selected');
-  });
-
-  selectedImages = [];
-
-  const resetButton = document.getElementById('reset');
-  resetButton.style.display = 'none';
-
-  const verifyButton = document.getElementById('verify');
-  verifyButton.style.display = 'none';
-
-  const para = document.getElementById('para');
-  para.innerHTML = '';
-}
-function () {
-  cy.visit(baseUrl + "/main.html");
-  cy.get('[data-ns-test="img1"]').eq(0).click();
-  cy.get('[data-ns-test="img2"]').eq(0).click();
-  cy.get('#btn').click();
-  cy.get('p').should("contain", "We can't verify you as a human. You selected the non-identical tiles.");
-}
-// Function to handle verify button click event
-function handleVerifyClick() {
-  verifyButtonClicked = true;
-
-  const para = document.getElementById('para');
-  para.innerHTML = '';
-
-  if (selectedImages.length === 2) {
-    const class1 = selectedImages[0].classList[0];
-    const class2 = selectedImages[1].classList[0];
-
-    if (class1 === class2) {
-      para.innerHTML = "You are a human. Congratulations!";
-    } else {
-      para.innerHTML = "We can't verify you as a human. You selected the non-identical tiles.";
-    }
-  }
-
-  const verifyButton = document.getElementById('verify');
-  verifyButton.style.display = 'none';
-}
-
-// Add event listeners to the reset and verify buttons
-const resetButton = document.getElementById('reset');
-resetButton.addEventListener('click', handleResetClick);
-
-const verifyButton = document.getElementById('verify');
-verifyButton.addEventListener('click', handleVerifyClick);
